@@ -2,22 +2,25 @@
  * JS
  */
 
-// async function go() {
-//   const p1 = await fetch('https://api.github.com/users/IamManchanda');
-//   const p2 = await fetch('https://api.github.com/users/wesbos');
-//   const res = await Promise.all([p1, p2]);
-//   const dataPromises = res.map(r => r.json());
-//   const [harry, wes] = await Promise.all(dataPromises);
-//   console.log(harry, wes);
-// }
+// navigator.geolocation.getCurrentPosition(function (pos) {
+//   console.log('It worked!');
+//   console.log(pos);
+// }, function (error) {
+//   console.log('It failed');
+//   console.error(error);
+// });
 
-// go();
-
-async function getData(names) {
-  const promises = names.map(name => fetch(`https://jsonplaceholder.typicode.com/${name}`).then(r => r.json()));
-  console.log(promises);
-  const fakeData = await Promise.all(promises);
-  console.log(fakeData);
+function getCurrentPosition(...args) {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(...args, resolve, reject);
+  });
 }
 
-getData(['posts', 'comments']);
+async function go() {
+  console.log('Starting');
+  const pos = await getCurrentPosition();
+  console.log(pos);
+  console.log('Finished');
+}
+
+go();
