@@ -2,22 +2,33 @@
  * JS
  */
 
-// fetch('https://www.github.com/users/IamManchanda')
-//   .then((response) => response.json())
-//   .then((response) => {
-//     console.log(response);
-//   })
-//   .catch((error) => {
-//     console.error(`Oh Noo! There is an error: ${error}`);
-//   });
+function breathe(amount) {
+  return new Promise((resolve, reject) => {
+    if (amount < 500) {
+      /* eslint-disable prefer-promise-reject-errors */
+      reject('Something went wrong!');
+      /* eslint-enable */
+    }
+    setTimeout(() => resolve(`Done for ${amount} ms`), amount);
+  });
+}
 
-const video = document.querySelector('.harry');
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then((mediaStream) => {
-    video.srcObject = mediaStream;
-    video.load();
-    video.play();
+breathe(1000)
+  .then((response) => {
+    console.log(response);
+    return breathe(500);
+  })
+  .then((response) => {
+    console.log(response);
+    return breathe(600);
+  })
+  .then((response) => {
+    console.log(response);
+    return breathe(400);
+  })
+  .then((response) => {
+    console.log(response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
