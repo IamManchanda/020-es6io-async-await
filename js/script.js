@@ -2,44 +2,22 @@
  * JS
  */
 
-function breathe(amount) {
-  return new Promise((resolve, reject) => {
-    if (amount < 500) {
-      /* eslint-disable prefer-promise-reject-errors */
-      reject('That is too small of a value');
-      /* eslint-enable */
-    }
-    setTimeout(() => resolve(`Completed after ${amount} ms`), amount);
-  });
+// async function go() {
+//   const p1 = await fetch('https://api.github.com/users/IamManchanda');
+//   const p2 = await fetch('https://api.github.com/users/wesbos');
+//   const res = await Promise.all([p1, p2]);
+//   const dataPromises = res.map(r => r.json());
+//   const [harry, wes] = await Promise.all(dataPromises);
+//   console.log(harry, wes);
+// }
+
+// go();
+
+async function getData(names) {
+  const promises = names.map(name => fetch(`https://jsonplaceholder.typicode.com/${name}`).then(r => r.json()));
+  console.log(promises);
+  const fakeData = await Promise.all(promises);
+  console.log(fakeData);
 }
 
-function catchErrors(fn) {
-  return function (...args) {
-    return fn(...args).catch((error) => {
-      console.error(`Sorry but there is an error: ${error}`);
-    });
-  };
-}
-
-const go = async (name, last) => {
-  console.log(`${name} ${last} started breathing.`);
-  let res;
-
-  res = await breathe(1000);
-  console.log(`First Breathe: ${res}`);
-
-  res = await breathe(500);
-  console.log(`Second Breathe: ${res}`);
-
-  res = await breathe(700);
-  console.log(`Third Breathe: ${res}`);
-
-  res = await breathe(400);
-  console.log(`Fourth Breathe: ${res}`);
-
-  res = await breathe(900);
-  console.log(`Fifth Breathe: ${res}`);
-};
-
-const wrappedFunction = catchErrors(go);
-wrappedFunction('Harry', 'Manchanda');
+getData(['posts', 'comments']);
